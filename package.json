@@ -1,0 +1,9 @@
+{
+  "private": true,
+  "name": "@zhuangya/ddns",
+  "version": "1.0.0",
+  "description": "cloudflare ddns worker",
+  "main": "index.js",
+  "author": "Ya Zhuang <zhuangya@users.noreply.github.com>",
+  "license": "MIT"
+}
