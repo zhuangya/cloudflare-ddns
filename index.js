@@ -9,26 +9,26 @@ async function handleRequest(request) {
   const password = searchParams.get('password');
 
   if (!isValid(username, password)) {
-    return end(401, 'Unauthoried');
+    return end('Unauthoried');
   }
 
   const hostname = searchParams.get('hostname');
   const ip = searchParams.get('ip');
 
   if (!hostname || !ip) {
-    return end(400, 'Bad Request');
+    return end('Bad Request');
   }
 
   try {
-    const { status, msg } = await updateRecord(hostname, ip);
-    return end(status, msg);
+    const msg = await updateRecord(hostname, ip);
+    return end(msg);
   } catch (e) {
-    return end(500, 'something went wrong and i am one humble server');
+    return end('something went wrong');
   }
 }
 
-function end(status = 200, message, ...options) {
-  return new Response(message, { status, ...options });
+function end(message, ...options) {
+  return new Response(message, { status: 200, ...options });
 }
 
 function isValid(username, password) {
@@ -56,7 +56,7 @@ async function updateRecord(hostname, ip) {
   const record = response.result[0];
 
   if (record.content === ip) {
-    return { status: 200, msg: 'skipped' };
+    return 'skipped';
   } else {
     const method = 'PATCH';
     const body = JSON.stringify({ content: ip, proxied: false });
@@ -66,6 +66,6 @@ async function updateRecord(hostname, ip) {
       body,
     });
 
-    return { status: 200, msg: 'updated' };
+    return 'updated';
   }
 }
