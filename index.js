@@ -56,7 +56,7 @@ async function updateRecord(hostname, ip) {
   const record = response.result[0];
 
   if (record.content === ip) {
-    return { status: 304, msg: null };
+    return { status: 200, msg: 'skipped' };
   } else {
     const method = 'PATCH';
     const body = JSON.stringify({ content: ip, proxied: false });
@@ -66,6 +66,6 @@ async function updateRecord(hostname, ip) {
       body,
     });
 
-    return { status: 201, msg: 'updated' };
+    return { status: 200, msg: 'updated' };
   }
 }
